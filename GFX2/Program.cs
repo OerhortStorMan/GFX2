@@ -1,5 +1,6 @@
 ﻿using System;
 using Raylib_cs;
+using System.Numerics;
 
 namespace GFX2
 {
@@ -34,21 +35,59 @@ namespace GFX2
             float RS = 0.3f;
             bool rightLost = false;
 
+            // Vector2 vector = new Vector2();
+            // vector.X = 400;
+            // vector.Y = 300;
 
-            float ballX = 400;
             float ballY = 300;
+            float ballX = 400;
             int ballR = 15;
-
+            float constant = 0.1f;
             Random generator = new Random();
-            //Så länge fönstret inte ska stängas; fortsätt while
+
             while(!Raylib.WindowShouldClose())
             {
                 //Ball movement
+
+                // if (vector.X < windowW)
+                // {
+                //     vector.X += 0.1f;
+                // }
+                // else if (vector.X > (windowW-ballR))
+                // {
+                //     vector.X -= 0.1f;
+                // }
+
+                // if (vector.Y < (windowH-ballR))
+                // {
+                //     vector.Y -= 0.1f;
+                // }
+                // else if (vector.Y > (windowH-ballR))
+                // {
+                //     vector.Y += 0.1f;
+                // }
+                
+                if (ballY < (windowH-ballR) || ballY > windowH)
+                {
+                    ballY += constant;
+                }
+                else
+                {
+                    constant *= -1;
+                    ballY += constant;
+                }
+
+
 
                 //ball goal
                 if (ballX == windowW - ballR)
                 {
                     rightLost = true;
+                }
+                
+                if (ballX == ballR)
+                {
+                    leftLost = true;
                 }
 
 
@@ -89,12 +128,20 @@ namespace GFX2
                 }
 
 
-
-
                 Raylib.BeginDrawing();
 
                 Raylib.ClearBackground(myColor);
 
+                if (rightLost == true)
+                {
+                    Raylib.ImageText("Right lost!", 20, Color.RED);
+                }
+                else if (leftLost == true)
+                {
+                    Raylib.ImageText("Left lost!", 20, Color.RED);
+                }
+                else
+                {
                 Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
 
                 Raylib.DrawRectangle(15, (int)LY, LW, LH, Color.WHITE);
@@ -102,11 +149,8 @@ namespace GFX2
                 Raylib.DrawRectangle(775, (int)RY, RW, RH, Color.WHITE);
 
                 Raylib.EndDrawing();
-
-                if (rightLost == true)
-                {
-                    //höger förlora!
                 }
+                
 
 
             }
