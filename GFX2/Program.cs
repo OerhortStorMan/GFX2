@@ -41,7 +41,7 @@ namespace GFX2
             //ball radius
             int ballR = 15;
             //ball speed constant
-            float constant = 0.175f;
+            float constant = 0.1f;
 
             //random gen for start angle
             Random generator = new Random();
@@ -84,15 +84,15 @@ namespace GFX2
                 }
 
                 //ball goal
-                if (ballX == windowW - ballR)
-                {
-                    rightLost = true;
-                }
+                // if (ballX == windowW - ballR)
+                // {
+                //     rightLost = true;
+                // }
                 
-                if (ballX == ballR)
-                {
-                    leftLost = true;
-                }
+                // if (ballX == ballR)
+                // {
+                //     leftLost = true;
+                // }
 
 
                 //Left movement
