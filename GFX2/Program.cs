@@ -35,49 +35,53 @@ namespace GFX2
             float RS = 0.3f;
             bool rightLost = false;
 
-            // Vector2 vector = new Vector2();
-            // vector.X = 400;
-            // vector.Y = 300;
-
+            //ball start
             float ballY = 300;
             float ballX = 400;
+            //ball radius
             int ballR = 15;
-            float constant = 0.1f;
+            //ball speed constant
+            float constant = 0.175f;
+
+            //random gen for start angle
             Random generator = new Random();
 
             while(!Raylib.WindowShouldClose())
             {
                 //Ball movement
-
-                // if (vector.X < windowW)
-                // {
-                //     vector.X += 0.1f;
-                // }
-                // else if (vector.X > (windowW-ballR))
-                // {
-                //     vector.X -= 0.1f;
-                // }
-
-                // if (vector.Y < (windowH-ballR))
-                // {
-                //     vector.Y -= 0.1f;
-                // }
-                // else if (vector.Y > (windowH-ballR))
-                // {
-                //     vector.Y += 0.1f;
-                // }
-                
-                if (ballY < (windowH-ballR) || ballY > windowH)
+                //ball y mov
+                if (ballY < (windowH-ballR)) 
                 {
                     ballY += constant;
+                    
                 }
-                else
+                else if (ballY > (windowH-ballR))
                 {
                     constant *= -1;
                     ballY += constant;
                 }
 
+                if (ballY < ballR)
+                {
+                    constant *= -1;
+                }
 
+                //ball X mov
+                if (ballX < (windowW-ballR)) 
+                {
+                    ballX += constant;
+                    
+                }
+                else if (ballX > (windowW-ballR))
+                {
+                    constant *= -1;
+                    ballX += constant;
+                }
+
+                if (ballX < ballR)
+                {
+                    constant *= -1;
+                }
 
                 //ball goal
                 if (ballX == windowW - ballR)
