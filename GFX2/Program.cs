@@ -22,7 +22,7 @@ namespace GFX2
             int LW = 10;
             //left speed
             float LS = 0.3f;
-
+            bool leftLost = false;
 
             //right y pos
             float RY = 0;
@@ -32,9 +32,12 @@ namespace GFX2
             int RW = 10;
             //right speed
             float RS = 0.3f;
+            bool rightLost = false;
+
 
             float ballX = 400;
             float ballY = 300;
+            int ballR = 15;
 
             Random generator = new Random();
             //Så länge fönstret inte ska stängas; fortsätt while
@@ -42,8 +45,14 @@ namespace GFX2
             {
                 //Ball movement
 
-                //Left movement
+                //ball goal
+                if (ballX == windowW - ballR)
+                {
+                    rightLost = true;
+                }
 
+
+                //Left movement
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 {
                     if (LY >= 0)
@@ -52,10 +61,9 @@ namespace GFX2
                     }
                 }
 
-                //box utanför spelrutan (!)
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
                 {
-                    if (LY <= (800-LH))
+                    if (LY <= (windowH-LH))
                     {
                         LY = LY + LS;
                     }
@@ -71,10 +79,9 @@ namespace GFX2
                     }
                 }
 
-                //box utanför spelrutan (!)
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN))
                 {
-                    if (RY <= (800-RH))
+                    if (RY <= (windowH-RH))
                     {
                         RY = RY + RS;
                     }
@@ -83,17 +90,25 @@ namespace GFX2
 
 
 
+
                 Raylib.BeginDrawing();
 
                 Raylib.ClearBackground(myColor);
 
-                Raylib.DrawCircle((int)ballX, (int)ballY, 15, Color.WHITE);
+                Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
 
-                Raylib.DrawRectangle(2, (int)LY, LW, LH, Color.WHITE);
+                Raylib.DrawRectangle(15, (int)LY, LW, LH, Color.WHITE);
 
-                Raylib.DrawRectangle(788, (int)RY, RW, RH, Color.WHITE);
+                Raylib.DrawRectangle(775, (int)RY, RW, RH, Color.WHITE);
 
                 Raylib.EndDrawing();
+
+                if (rightLost == true)
+                {
+                    //höger förlora!
+                }
+
+
             }
 
             
