@@ -1,6 +1,5 @@
 ﻿using System;
 using Raylib_cs;
-using System.Numerics;
 
 namespace GFX2
 {
