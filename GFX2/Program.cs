@@ -135,6 +135,7 @@ namespace GFX2
                     RY = RY + RS;
                 }
 
+                //Drawing
                 Raylib.BeginDrawing();
 
                 Raylib.ClearBackground(myColor);
