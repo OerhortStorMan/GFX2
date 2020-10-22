@@ -8,48 +8,76 @@ namespace GFX2
     {
         static void Main(string[] args)
         {
-            int windowH = 600;
-            int windowW = 800;
+            //Window prop.
+            int windowW = 1280;
+            int windowH = 720;
 
             Raylib.InitWindow(windowW, windowH, "Ping Pong");
 
             Color myColor = new Color(0, 0, 0, 0);
 
-            //left Y pos
-            float LY = 300;
-            // left X pos
-            float LX = 15;
+
+            //LEFT
+            
             //left height
-            int LH = 80;
+            int LH = 120;
             //left width
             int LW = 10;
-            //left speed
-            float LS = 0.1f;
-            bool leftLost = false;
 
-            //right y pos
-            float RY = 300;
-            //right x pos
-            float RX = 775;
+            //left Y pos
+            float LY = windowH/2;
+            // left X pos
+            float LX = 15;
+
+            //left speed
+            float LS = 0.125f;
+
+            //left score
+            int LSC = 0;
+
+
+            //RIGHT
+        
             //right height
-            int RH = 80;
+            int RH = 120;
             //right width
             int RW = 10;
+
+            //right y pos
+            float RY = windowH/2;
+            //right x pos
+            float RX = windowW-15-RW;
+
             //right speed
-            float RS = 0.1f;
-            bool rightLost = false;
+            float RS = 0.125f;
+
+            //right score
+            int RSC = 0;
+
+
+            //BALL
 
             //ball start
             float ballY = 300;
             float ballX = 400;
+
             //ball radius
             int ballR = 15;
+
             //ball speed constant
             float xConstant = 0.1f;
             float yConstant = 0.1f;
 
-            //random gen for start angle
+            //random gen for start position
             Random generator = new Random();
+            ballY = generator.Next(250,351);
+            ballX = generator.Next(350, 451);
+            
+
+            //middle line info
+            float midW = 5;
+
+            
 
             while(!Raylib.WindowShouldClose())
             {
@@ -83,19 +111,6 @@ namespace GFX2
                 {
                     yConstant *= -1;
                 }
-                
-
-
-
-                //ball goal
-                // if (ballX == windowW)
-                // {
-                //     rightLost = true;
-                // }
-                // if (ballX == 0)
-                // {
-                //     leftLost = true;
-                // }
 
 
                 //Left movement
@@ -134,29 +149,26 @@ namespace GFX2
                     
                 }
 
-
                 Raylib.BeginDrawing();
 
                 Raylib.ClearBackground(myColor);
 
-                if (rightLost == true)
-                {
-                    Raylib.ImageText("Right lost!", 20, Color.RED);
-                }
-                else if (leftLost == true)
-                {
-                    Raylib.ImageText("Left lost!", 20, Color.RED);
-                }
-                else
-                {
+                Raylib.DrawRectangle((int)((windowW/2)-(midW/2)), 0, (int)midW, windowH, Color.GRAY);
+                
                 Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
 
                 Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
 
                 Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
 
+                // Raylib.DrawText();
+
+                //DRAW POINTS, RÄKNA UT POINTS
+
                 Raylib.EndDrawing();
-                }
+
+
+                
                 
 
 
@@ -165,5 +177,7 @@ namespace GFX2
             
             
         }
+
+        
     }
 }
