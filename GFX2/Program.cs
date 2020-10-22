@@ -7,152 +7,158 @@ namespace GFX2
     {
         static void Main(string[] args)
         {
-            //Window prop.
-            int windowW = 1280;
-            int windowH = 720;
+            //WINDOW PROPERTIES
+                //Window width
+                int windowW = 1280;
 
-            Raylib.InitWindow(windowW, windowH, "Ping Pong");
+                //Window height
+                int windowH = 720;
 
-            Color myColor = new Color(0, 0, 0, 0);
+                //Window creation
+                Raylib.InitWindow(windowW, windowH, "Ping Pong");
 
-
-            //LEFT
-            
-            //left height
-            int LH = 150;
-            //left width
-            int LW = 10;
-
-            //left Y pos
-            float LY = (windowH/2)-(LH/2);
-            // left X pos
-            float LX = 15;
-
-            //left speed
-            float LS = 0.125f;
-
-            //left score
-            int LSC = 0;
+                //Background color
+                Color myColor = new Color(0, 0, 0, 0);
 
 
-            //RIGHT
-        
-            //right height
-            int RH = 150;
-            //right width
-            int RW = 10;
+            //LEFT BLOCK
+                //Left height
+                int LH = 150;
+                //Left width
+                int LW = 10;
 
-            //right y pos
-            float RY = (windowH/2)-(RH/2);
-            //right x pos
-            float RX = windowW-15-RW;
+                //Left Y pos
+                float LY = (windowH/2)-(LH/2);
+                //Left X pos
+                float LX = 15;
 
-            //right speed
-            float RS = 0.125f;
+                //Left speed
+                float LS = 0.125f;
 
-            //right score
-            int RSC = 0;
+                //Left score
+                int LSC = 0;
+
+
+            //RIGHT BLOCK
+                //Right height
+                int RH = 150;
+                //Right width
+                int RW = 10;
+
+                //Right y pos
+                float RY = (windowH/2)-(RH/2);
+                //Right x pos
+                float RX = windowW-15-RW;
+
+                //Right speed
+                float RS = 0.125f;
+
+                //Right score
+                int RSC = 0;
 
 
             //BALL
+                //Ball start
+                float ballY = 300;
+                float ballX = 400;
 
-            //ball start
-            float ballY = 300;
-            float ballX = 400;
+                //Ball radius
+                int ballR = 15;
 
-            //ball radius
-            int ballR = 15;
+                //Ball speed constant
+                float xConstant = 0.1f;
+                float yConstant = 0.1f;
 
-            //ball speed constant
-            float xConstant = 0.1f;
-            float yConstant = 0.1f;
-
-            //random gen for start position
-            Random generator = new Random();
-            ballY = generator.Next(250,351);
-            ballX = generator.Next(350, 451);
+                //Random gen for start position
+                Random generator = new Random();
+                ballY = generator.Next(250,351);
+                ballX = generator.Next(350, 451);
             
 
             //MIDDLE LINE INFO
-            float midW = 5;
+                float midW = 5;
 
-            
+            //RUN GAME
             while(!Raylib.WindowShouldClose())
             {
-                //Ball movement
-                //speed increase
-                xConstant = xConstant*1.000001f;
-                yConstant = yConstant*1.000001f;
-                //ball y mov
-                if (ballY < (windowH-ballR)) 
-                {
-                    ballY += xConstant;
-                }
-                else if (ballY > (windowH-ballR))
-                {
-                    xConstant *= -1;
-                    ballY += xConstant;
-                }
+                //BALL MOVEMENT
+                    //Speed increase
+                        xConstant = xConstant*1.000001f;
+                        yConstant = yConstant*1.000001f;
 
-                if (ballY < ballR)
-                {
-                    xConstant *= -1;
-                }
+                    //Ball y mov
+                        if (ballY < (windowH-ballR)) 
+                        {
+                            ballY += xConstant;
+                        }
+                        else if (ballY > (windowH-ballR))
+                        {
+                            xConstant *= -1;
+                            ballY += xConstant;
+                        }
 
-                //ball X mov + bounce
-                ballX += yConstant;
+                        if (ballY < ballR)
+                        {
+                            xConstant *= -1;
+                        }
 
-                if (ballY > (RY-5) && ballY < (RY+RH+5) && ballX > (RX-ballR))
-                {
-                    yConstant *= -1;
-                }
+                    //Ball X mov + bounce
+                        //Main movement
+                        ballX += yConstant;
 
-                if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR))
-                {
-                    yConstant *= -1;
-                }
+                        //Right bounce
+                        if (ballY > (RY-5) && ballY < (RY+RH+5) && ballX > (RX-ballR))
+                        {
+                            yConstant *= -1;
+                        }
 
+                        //Left bounce
+                        if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR))
+                        {
+                            yConstant *= -1;
+                        }
 
-                //Left movement
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && LY >= 0)
-                {
-                    LY = LY - RS;
-                }
+                //BLOCK MOVEMENT
+                    //Left movement
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && LY >= 0)
+                        {
+                            LY = LY - RS;
+                        }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && LY <= (windowH-LH))
-                {
-                    LY = LY + LS;
-                }
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && LY <= (windowH-LH))
+                        {
+                            LY = LY + LS;
+                        }
 
-                //Right movement
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && RY >= 0)
-                {
-                    RY = RY - RS;
-                }
+                    //Right movement
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && RY >= 0)
+                        {
+                            RY = RY - RS;
+                        }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && RY <= (windowH-RH))
-                {
-                    RY = RY + RS;
-                }
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && RY <= (windowH-RH))
+                        {
+                            RY = RY + RS;
+                        }
 
-                //Drawing
-                Raylib.BeginDrawing();
+                //DRAWING
+                    Raylib.BeginDrawing();
 
-                Raylib.ClearBackground(myColor);
+                    Raylib.ClearBackground(myColor);
 
-                Raylib.DrawRectangle((int)((windowW/2)-(midW/2)), 0, (int)midW, windowH, Color.GRAY);
-                
-                Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
+                    Raylib.DrawRectangle((int)((windowW/2)-(midW/2)), 0, (int)midW, windowH, Color.GRAY);
+                    
+                    Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
 
-                Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
+                    Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
 
-                Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
+                    Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
 
-                //DRAW POINTS, RÄKNA UT POINTS
+                    //DRAW POINTS, RÄKNA UT POINTS
 
-                // Raylib.DrawText();
+                    // Raylib.DrawText();
 
-                Raylib.EndDrawing();
+                    Raylib.EndDrawing();
 
             }
 
