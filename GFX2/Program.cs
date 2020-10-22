@@ -20,7 +20,7 @@ namespace GFX2
             //LEFT
             
             //left height
-            int LH = 120;
+            int LH = windowH/6;
             //left width
             int LW = 10;
 
@@ -39,7 +39,7 @@ namespace GFX2
             //RIGHT
         
             //right height
-            int RH = 120;
+            int RH = windowH/6;
             //right width
             int RW = 10;
 
@@ -74,11 +74,10 @@ namespace GFX2
             ballX = generator.Next(350, 451);
             
 
-            //middle line info
+            //MIDDLE LINE INFO
             float midW = 5;
 
             
-
             while(!Raylib.WindowShouldClose())
             {
                 //Ball movement
@@ -86,7 +85,6 @@ namespace GFX2
                 if (ballY < (windowH-ballR)) 
                 {
                     ballY += xConstant;
-                    
                 }
                 else if (ballY > (windowH-ballR))
                 {
@@ -114,39 +112,25 @@ namespace GFX2
 
 
                 //Left movement
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && LY >= 0)
                 {
-                    if (LY >= 0)
-                    {
-                        LY = LY - RS;
-                    }
+                    LY = LY - RS;
                 }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && LY <= (windowH-LH))
                 {
-                    if (LY <= (windowH-LH))
-                    {
-                        LY = LY + LS;
-                    }
-                    
+                    LY = LY + LS;
                 }
 
                 //Right movement
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_UP))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && RY >= 0)
                 {
-                    if (RY >= 0)
-                    {
-                        RY = RY - RS;
-                    }
+                    RY = RY - RS;
                 }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && RY <= (windowH-RH))
                 {
-                    if (RY <= (windowH-RH))
-                    {
-                        RY = RY + RS;
-                    }
-                    
+                    RY = RY + RS;
                 }
 
                 Raylib.BeginDrawing();
@@ -161,16 +145,11 @@ namespace GFX2
 
                 Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
 
-                // Raylib.DrawText();
-
                 //DRAW POINTS, RÄKNA UT POINTS
 
+                // Raylib.DrawText();
+
                 Raylib.EndDrawing();
-
-
-                
-                
-
 
             }
 
