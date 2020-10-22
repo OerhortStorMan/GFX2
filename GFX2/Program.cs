@@ -69,6 +69,9 @@ namespace GFX2
                 float xConstant = 0.1f;
                 float yConstant = 0.1f;
 
+                //Ball speed increase constant
+                float speedIncreaseConstant = 1.00001f;
+
                 //Random gen for start position
                 Random generator = new Random();
                 ballY = generator.Next(250,351);
@@ -84,39 +87,49 @@ namespace GFX2
             {
                 //BALL MOVEMENT
                     //Speed increase
-                        xConstant = xConstant*1.00001f;
-                        yConstant = yConstant*1.00001f;
+                        xConstant = xConstant*speedIncreaseConstant;
+                        yConstant = yConstant*speedIncreaseConstant;
 
                     //Ball y mov
                         if (ballY < (windowH-ballR)) 
                         {
-                            ballY += xConstant;
+                            ballY += yConstant;
                         }
                         else if (ballY > (windowH-ballR))
                         {
-                            xConstant *= -1;
-                            ballY += xConstant;
+                            yConstant *= -1;
+                            ballY += yConstant;
                         }
 
                         if (ballY < ballR)
                         {
-                            xConstant *= -1;
+                            yConstant *= -1;
                         }
 
                     //Ball X mov + bounce
                         //Main movement
-                        ballX += yConstant;
+                        ballX += xConstant;
 
                         //Right bounce
                         if (ballY > (RY-5) && ballY < (RY+RH+5) && ballX > (RX-ballR))
                         {
-                            yConstant *= -1;
+                            //Change direction
+                                xConstant *= -1;
+                            
+                            //Speed increase on bounce
+                                xConstant = xConstant*speedIncreaseConstant;
+                                yConstant = yConstant*speedIncreaseConstant;
                         }
 
                         //Left bounce
                         if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR))
                         {
-                            yConstant *= -1;
+                            //Change direction
+                                xConstant *= -1;
+                            
+                            //Speed increase on bounce
+                                xConstant = xConstant*1.00005f;
+                                yConstant = yConstant*1.00005f;
                         }
 
                 //BLOCK MOVEMENT
