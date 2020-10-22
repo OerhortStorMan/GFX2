@@ -20,12 +20,12 @@ namespace GFX2
             //LEFT
             
             //left height
-            int LH = windowH/6;
+            int LH = 150;
             //left width
             int LW = 10;
 
             //left Y pos
-            float LY = windowH/2;
+            float LY = (windowH/2)-(LH/2);
             // left X pos
             float LX = 15;
 
@@ -39,12 +39,12 @@ namespace GFX2
             //RIGHT
         
             //right height
-            int RH = windowH/6;
+            int RH = 150;
             //right width
             int RW = 10;
 
             //right y pos
-            float RY = windowH/2;
+            float RY = (windowH/2)-(RH/2);
             //right x pos
             float RX = windowW-15-RW;
 
@@ -81,6 +81,9 @@ namespace GFX2
             while(!Raylib.WindowShouldClose())
             {
                 //Ball movement
+                //speed increase
+                xConstant = xConstant*1.000001f;
+                yConstant = yConstant*1.000001f;
                 //ball y mov
                 if (ballY < (windowH-ballR)) 
                 {
