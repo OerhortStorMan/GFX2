@@ -18,7 +18,7 @@ namespace GFX2
                 Raylib.InitWindow(windowW, windowH, "Ping Pong");
 
                 //Background color
-                Color myColor = new Color(0, 0, 0, 0);
+                Color backgroundColor = new Color(0, 0, 0, 0);
 
 
             //LEFT BLOCK
@@ -76,6 +76,7 @@ namespace GFX2
             
 
             //MIDDLE LINE INFO
+                //Middle line width
                 float midW = 5;
 
             //RUN GAME
@@ -144,7 +145,7 @@ namespace GFX2
                 //DRAWING
                     Raylib.BeginDrawing();
 
-                    Raylib.ClearBackground(myColor);
+                    Raylib.ClearBackground(backgroundColor);
 
                     Raylib.DrawRectangle((int)((windowW/2)-(midW/2)), 0, (int)midW, windowH, Color.GRAY);
                     
@@ -159,13 +160,7 @@ namespace GFX2
                     // Raylib.DrawText();
 
                     Raylib.EndDrawing();
-
             }
-
-            
-            
         }
-
-        
     }
 }
