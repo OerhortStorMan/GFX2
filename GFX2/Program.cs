@@ -16,23 +16,27 @@ namespace GFX2
             Color myColor = new Color(0, 0, 0, 0);
 
             //left Y pos
-            float LY = 0;
+            float LY = 300;
+            // left X pos
+            float LX = 15;
             //left height
             int LH = 80;
             //left width
             int LW = 10;
             //left speed
-            float LS = 0.3f;
+            float LS = 0.1f;
             bool leftLost = false;
 
             //right y pos
-            float RY = 0;
+            float RY = 300;
+            //right x pos
+            float RX = 775;
             //right height
             int RH = 80;
             //right width
             int RW = 10;
             //right speed
-            float RS = 0.3f;
+            float RS = 0.1f;
             bool rightLost = false;
 
             //ball start
@@ -41,7 +45,8 @@ namespace GFX2
             //ball radius
             int ballR = 15;
             //ball speed constant
-            float constant = 0.1f;
+            float xConstant = 0.1f;
+            float yConstant = 0.1f;
 
             //random gen for start angle
             Random generator = new Random();
@@ -52,44 +57,42 @@ namespace GFX2
                 //ball y mov
                 if (ballY < (windowH-ballR)) 
                 {
-                    ballY += constant;
+                    ballY += xConstant;
                     
                 }
                 else if (ballY > (windowH-ballR))
                 {
-                    constant *= -1;
-                    ballY += constant;
+                    xConstant *= -1;
+                    ballY += xConstant;
                 }
 
                 if (ballY < ballR)
                 {
-                    constant *= -1;
+                    xConstant *= -1;
                 }
 
-                //ball X mov
-                if (ballX < (windowW-ballR)) 
+                //ball X mov + bounce
+                ballX += yConstant;
+
+                if (ballY > RY && ballY < (RY+RH) && ballX > (RX-ballR))
                 {
-                    ballX += constant;
-                    
-                }
-                else if (ballX > (windowW-ballR))
-                {
-                    constant *= -1;
-                    ballX += constant;
+                    yConstant *= -1;
                 }
 
-                if (ballX < ballR)
+                if (ballY > LY && ballY < (LY+LH) && ballX < (LX+ballR))
                 {
-                    constant *= -1;
+                    yConstant *= -1;
                 }
+                
+
+
 
                 //ball goal
-                // if (ballX == windowW - ballR)
+                // if (ballX == windowW)
                 // {
                 //     rightLost = true;
                 // }
-                
-                // if (ballX == ballR)
+                // if (ballX == 0)
                 // {
                 //     leftLost = true;
                 // }
@@ -148,9 +151,9 @@ namespace GFX2
                 {
                 Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
 
-                Raylib.DrawRectangle(15, (int)LY, LW, LH, Color.WHITE);
+                Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
 
-                Raylib.DrawRectangle(775, (int)RY, RW, RH, Color.WHITE);
+                Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
 
                 Raylib.EndDrawing();
                 }
