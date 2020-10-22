@@ -84,8 +84,8 @@ namespace GFX2
             {
                 //BALL MOVEMENT
                     //Speed increase
-                        xConstant = xConstant*1.000001f;
-                        yConstant = yConstant*1.000001f;
+                        xConstant = xConstant*1.00001f;
+                        yConstant = yConstant*1.00001f;
 
                     //Ball y mov
                         if (ballY < (windowH-ballR)) 
