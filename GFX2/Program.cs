@@ -102,12 +102,12 @@ namespace GFX2
                 //ball X mov + bounce
                 ballX += yConstant;
 
-                if (ballY > RY && ballY < (RY+RH) && ballX > (RX-ballR))
+                if (ballY > (RY-5) && ballY < (RY+RH+5) && ballX > (RX-ballR))
                 {
                     yConstant *= -1;
                 }
 
-                if (ballY > LY && ballY < (LY+LH) && ballX < (LX+ballR))
+                if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR))
                 {
                     yConstant *= -1;
                 }
