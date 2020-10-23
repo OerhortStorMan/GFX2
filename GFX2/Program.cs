@@ -70,7 +70,7 @@ namespace GFX2
                 float yConstant = 0.1f;
 
                 //Ball speed increase constant
-                float speedIncreaseConstant = 1.0000075f;
+                float speedIncreaseConstant = 1.00001f;
 
                 //Random gen for start position
                 Random generator = new Random();
@@ -128,8 +128,8 @@ namespace GFX2
                                 xConstant *= -1;
                             
                             //Speed increase on bounce
-                                xConstant = xConstant*1.00005f;
-                                yConstant = yConstant*1.00005f;
+                                xConstant = xConstant*speedIncreaseConstant;
+                                yConstant = yConstant*speedIncreaseConstant;
                         }
 
                 //BLOCK MOVEMENT
