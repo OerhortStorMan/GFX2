@@ -155,22 +155,48 @@ namespace GFX2
                             RY = RY + RS;
                         }
 
+                //Point system
+                    if (ballX > windowW)
+                    {
+                        LSC++;
+                        ballY = generator.Next(250,351);
+                        ballX = generator.Next(350, 451);
+                        xConstant = 0.1f;
+                        yConstant = 0.1f;
+                    }
+                    else if (ballX < 0)
+                    {
+                        RSC++;
+                        ballY = generator.Next(250,351);
+                        ballX = generator.Next(350, 451);
+                        xConstant = 0.1f;
+                        yConstant = 0.1f;
+                    }
+
                 //DRAWING
                     Raylib.BeginDrawing();
 
                     Raylib.ClearBackground(backgroundColor);
 
+                    //Middle line
                     Raylib.DrawRectangle((int)((windowW/2)-(midW/2)), 0, (int)midW, windowH, Color.GRAY);
-                    
-                    Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
 
+                    //Score
+                    Raylib.DrawText(LSC.ToString(), (windowW/2)-(windowW/4), 5, 250, Color.GRAY);
+
+                    Raylib.DrawText(RSC.ToString(), (windowW/2)+(windowH/4), 5, 250, Color.GRAY);
+                    
+                    //Ball
+                    if (ballX > 0 && ballX < windowW)
+                    {
+                        Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
+                    }
+                    
+
+                    //Blocks
                     Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
 
                     Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
-
-                    //DRAW POINTS, RÄKNA UT POINTS
-
-                    // Raylib.DrawText();
 
                     Raylib.EndDrawing();
             }
