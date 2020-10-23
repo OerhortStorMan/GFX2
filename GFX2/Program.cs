@@ -70,12 +70,14 @@ namespace GFX2
                 float yConstant = 0.1f;
 
                 //Ball speed increase constant
-                float speedIncreaseConstant = 1.00001f;
+                float speedIncreaseConstant = 0.1f; //For resetting speed after scoring
+                float speedIncreaseVar = 1.00001f; //The speed increaser
 
+                
                 //Random gen for start position
                 Random generator = new Random();
-                ballY = generator.Next(250,351);
-                ballX = generator.Next(350, 451);
+                ballY = generator.Next(windowH/4,((windowH/4)*3));
+                ballX = generator.Next(windowW/4, ((windowW/4)*3));
             
 
             //MIDDLE LINE INFO
@@ -87,8 +89,8 @@ namespace GFX2
             {
                 //BALL MOVEMENT
                     //Speed increase
-                        xConstant = xConstant*speedIncreaseConstant;
-                        yConstant = yConstant*speedIncreaseConstant;
+                        xConstant = xConstant*speedIncreaseVar;
+                        yConstant = yConstant*speedIncreaseVar;
 
                     //Ball y mov
                         if (ballY < (windowH-ballR)) 
@@ -117,8 +119,8 @@ namespace GFX2
                                 xConstant *= -1;
                             
                             //Speed increase on bounce
-                                xConstant = xConstant*speedIncreaseConstant;
-                                yConstant = yConstant*speedIncreaseConstant;
+                                xConstant = xConstant*speedIncreaseVar;
+                                yConstant = yConstant*speedIncreaseVar;
                         }
 
                         //Left bounce
@@ -128,8 +130,8 @@ namespace GFX2
                                 xConstant *= -1;
                             
                             //Speed increase on bounce
-                                xConstant = xConstant*speedIncreaseConstant;
-                                yConstant = yConstant*speedIncreaseConstant;
+                                xConstant = xConstant*speedIncreaseVar;
+                                yConstant = yConstant*speedIncreaseVar;
                         }
 
                 //BLOCK MOVEMENT
@@ -157,32 +159,32 @@ namespace GFX2
 
                 //Point system
                     //Left scores
-                        if (ballX > windowW)
+                        if (ballX > RX)
                         {
                             //Score increase
                                 LSC++;
 
                             //Spawn new ball
-                                ballY = generator.Next(250,351);
-                                ballX = generator.Next(350, 451);
+                                ballY = generator.Next(windowH/4,((windowH/4)*3));
+                                ballX = generator.Next(windowW/4, ((windowW/4)*3));
 
                             //Reset speed
-                                xConstant = 0.1f;
-                                yConstant = 0.1f;
+                                xConstant = speedIncreaseConstant;
+                                yConstant = speedIncreaseConstant;
                         }
                     //Right scores
-                        else if (ballX < 0)
+                        else if (ballX < (LX+LW))
                         {
                             //Score increase
                                 RSC++;
 
                             //Spawn new ball
-                                ballY = generator.Next(250,351);
-                                ballX = generator.Next(350, 451);
+                                ballY = generator.Next(windowH/4,((windowH/4)*3));
+                                ballX = generator.Next(windowW/4, ((windowW/4)*3));
 
                             //Reset speed
-                                xConstant = 0.1f;
-                                yConstant = 0.1f;
+                                xConstant = speedIncreaseConstant;
+                                yConstant = speedIncreaseConstant;
                         }
 
                 //DRAWING
