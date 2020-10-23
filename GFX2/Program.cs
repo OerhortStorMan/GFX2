@@ -156,22 +156,34 @@ namespace GFX2
                         }
 
                 //Point system
-                    if (ballX > windowW)
-                    {
-                        LSC++;
-                        ballY = generator.Next(250,351);
-                        ballX = generator.Next(350, 451);
-                        xConstant = 0.1f;
-                        yConstant = 0.1f;
-                    }
-                    else if (ballX < 0)
-                    {
-                        RSC++;
-                        ballY = generator.Next(250,351);
-                        ballX = generator.Next(350, 451);
-                        xConstant = 0.1f;
-                        yConstant = 0.1f;
-                    }
+                    //Left scores
+                        if (ballX > windowW)
+                        {
+                            //Score increase
+                                LSC++;
+
+                            //Spawn new ball
+                                ballY = generator.Next(250,351);
+                                ballX = generator.Next(350, 451);
+
+                            //Reset speed
+                                xConstant = 0.1f;
+                                yConstant = 0.1f;
+                        }
+                    //Right scores
+                        else if (ballX < 0)
+                        {
+                            //Score increase
+                                RSC++;
+
+                            //Spawn new ball
+                                ballY = generator.Next(250,351);
+                                ballX = generator.Next(350, 451);
+
+                            //Reset speed
+                                xConstant = 0.1f;
+                                yConstant = 0.1f;
+                        }
 
                 //DRAWING
                     Raylib.BeginDrawing();
@@ -192,7 +204,6 @@ namespace GFX2
                         Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
                     }
                     
-
                     //Blocks
                     Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
 
