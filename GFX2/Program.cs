@@ -70,7 +70,7 @@ namespace GFX2
                 float yConstant = 0.1f;
 
                 //Ball speed increase constant
-                float speedIncreaseConstant = 1.00001f;
+                float speedIncreaseConstant = 1.0000075f;
 
                 //Random gen for start position
                 Random generator = new Random();
