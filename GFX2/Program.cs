@@ -20,6 +20,8 @@ namespace GFX2
                 //Background color
                 Color backgroundColor = new Color(0, 0, 0, 0);
 
+                //Target FPS
+                Raylib.SetTargetFPS(60);
 
             //LEFT BLOCK
                 //Left height
@@ -33,7 +35,7 @@ namespace GFX2
                 float LX = 15;
 
                 //Left speed
-                float LS = 0.125f;
+                float LS = 7f;
 
                 //Left score
                 int LSC = 0;
@@ -51,7 +53,7 @@ namespace GFX2
                 float RX = windowW-15-RW;
 
                 //Right speed
-                float RS = 0.125f;
+                float RS = 7f;
 
                 //Right score
                 int RSC = 0;
@@ -66,11 +68,11 @@ namespace GFX2
                 int ballR = 15;
 
                 //Ball speed constant
-                float xConstant = 0.1f;
-                float yConstant = 0.1f;
+                float xConstant = 5f;
+                float yConstant = 5f;
 
                 //Ball speed increase constant
-                float speedIncreaseConstant = 0.1f; //For resetting speed after scoring
+                float speedIncreaseConstant = 5f; //For resetting speed after scoring
                 float speedIncreaseVar = 1.00001f; //The speed increaser
 
                 
@@ -124,7 +126,7 @@ namespace GFX2
                         }
 
                         //Left bounce
-                        if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR))
+                        if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR*2))
                         {
                             //Change direction
                                 xConstant *= -1;
