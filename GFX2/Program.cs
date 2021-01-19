@@ -7,211 +7,205 @@ namespace GFX2
     {
         static void Main(string[] args)
         {
-            //WINDOW PROPERTIES
-                //Window width
-                int windowW = 1280;
+            MainMenu();
+        }
 
-                //Window height
-                int windowH = 720;
+        static void MainMenu()
+        {
 
-                //Window creation
-                Raylib.InitWindow(windowW, windowH, "Ping Pong");
+int x = 0;
+            while (true)
+            {
+                Console.Clear();
+                System.Console.WriteLine(@" 
+ ______ _                ______                  
+(_____ (_)              (_____ \                 
+ _____) ) ____   ____    _____) )__  ____   ____ 
+|  ____/ |  _ \ / _  |  |  ____/ _ \|  _ \ / _  |
+| |    | | | | ( (_| |  | |   | |_| | | | ( (_| |
+|_|    |_|_| |_|\___ |  |_|    \___/|_| |_|\___ |
+               (_____|                    (_____| 
+");
+                string[] array = new string[]{"Play", "Quit"};
+                for (int i = 0; i < x; i++)
+                {
+                    System.Console.WriteLine(array[i]);
+                }
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("--> " + array[x]);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                for (int i = x +1; i < array.Length; i++)
+                {
+                    System.Console.WriteLine(array[i]);
+                }
+                ConsoleKeyInfo Ui = Console.ReadKey();
 
-                //Background color
-                Color backgroundColor = new Color(0, 0, 0, 0);
+                if (Ui.Key == ConsoleKey.DownArrow && x != array.Length-1|| Ui.Key == ConsoleKey.S && x != array.Length-1)
+                {
+                    x++;
+                }
+                else if (Ui.Key == ConsoleKey.UpArrow && x != 0|| Ui.Key == ConsoleKey.W && x != 0)
+                {
+                    x--;
+                }
+                else if (Ui.Key == ConsoleKey.Enter)
+                {
+                    if (x == 0)
+                    {
+                        Game();
+                    }
+                    else
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+            }
+        }
+        static void Game()
+        {
+            Window.Initialize();
 
-                //Target FPS
-                Raylib.SetTargetFPS(60);
-
-            //LEFT BLOCK
-                //Left height
-                int LH = 150;
-                //Left width
-                int LW = 10;
-
-                //Left Y pos
-                float LY = (windowH/2)-(LH/2);
-                //Left X pos
-                float LX = 15;
-
-                //Left speed
-                float LS = 7f;
-
-                //Left score
-                int LSC = 0;
-
-
-            //RIGHT BLOCK
-                //Right height
-                int RH = 150;
-                //Right width
-                int RW = 10;
-
-                //Right y pos
-                float RY = (windowH/2)-(RH/2);
-                //Right x pos
-                float RX = windowW-15-RW;
-
-                //Right speed
-                float RS = 7f;
-
-                //Right score
-                int RSC = 0;
-
-
-            //BALL
-                //Ball start
-                float ballY = 300;
-                float ballX = 400;
-
-                //Ball radius
-                int ballR = 15;
-
-                //Ball speed constant
-                float xConstant = 5f;
-                float yConstant = 5f;
-
-                //Ball speed increase constant
-                float speedIncreaseConstant = 5f; //For resetting speed after scoring
-                float speedIncreaseVar = 1.00001f; //The speed increaser
-
-                
-                //Random gen for start position
-                Random generator = new Random();
-                ballY = generator.Next(windowH/4,((windowH/4)*3));
-                ballX = generator.Next(windowW/4, ((windowW/4)*3));
+            Random generator = new Random();
+            Ball ball = new Ball(generator.Next(Window.windowW/4, ((Window.windowW/4)*3)), generator.Next(Window.windowH/4,((Window.windowH/4)*3)));
             
 
             //MIDDLE LINE INFO
                 //Middle line width
                 float midW = 5;
 
+            //SPAWN BLOCKS
+                Block right = new Block(1255, 360);
+                Block left = new Block(15, 360);
+
             //RUN GAME
             while(!Raylib.WindowShouldClose())
             {
                 //BALL MOVEMENT
                     //Speed increase
-                        xConstant = xConstant*speedIncreaseVar;
-                        yConstant = yConstant*speedIncreaseVar;
+                        ball.xConstant = ball.xConstant*ball.speedIncreaseVar;
+                        ball.yConstant = ball.yConstant*ball.speedIncreaseVar;
 
                     //Ball y mov
-                        if (ballY < (windowH-ballR)) 
+                        if (ball.Y < (Window.windowH-ball.R)) 
                         {
-                            ballY += yConstant;
+                            ball.Y += (int)ball.yConstant;
                         }
-                        else if (ballY > (windowH-ballR))
+                        else if (ball.Y > (Window.windowH-ball.R))
                         {
-                            yConstant *= -1;
-                            ballY += yConstant;
+                            ball.yConstant *= -1;
+                            ball.Y += (int)ball.yConstant;
                         }
 
-                        if (ballY < ballR)
+                        if (ball.Y < ball.R)
                         {
-                            yConstant *= -1;
+                            ball.yConstant *= -1;
                         }
 
                     //Ball X mov + bounce
                         //Main movement
-                        ballX += xConstant;
+                        ball.X += (int)ball.xConstant;
 
                         //Right bounce
-                        if (ballY > (RY-5) && ballY < (RY+RH+5) && ballX > (RX-ballR))
+                        if (ball.Y > (right.Y-5) && ball.Y < (right.Y+right.H+5) && ball.X > (right.X-ball.R))
                         {
                             //Change direction
-                                xConstant *= -1;
+                                ball.xConstant *= -1;
                             
                             //Speed increase on bounce
-                                xConstant = xConstant*speedIncreaseVar;
-                                yConstant = yConstant*speedIncreaseVar;
+                                ball.xConstant = ball.xConstant*ball.speedIncreaseVar;
+                                ball.yConstant = ball.yConstant*ball.speedIncreaseVar;
                         }
 
                         //Left bounce
-                        if (ballY > (LY-5) && ballY < (LY+LH+5) && ballX < (LX+ballR*2))
+                        if (ball.Y > (left.Y-5) && ball.Y < (left.Y+left.H+5) && ball.X < (left.X+ball.R*2))
                         {
                             //Change direction
-                                xConstant *= -1;
+                                ball.xConstant *= -1;
                             
                             //Speed increase on bounce
-                                xConstant = xConstant*speedIncreaseVar;
-                                yConstant = yConstant*speedIncreaseVar;
+                                ball.xConstant = ball.xConstant*ball.speedIncreaseVar;
+                                ball.yConstant = ball.yConstant*ball.speedIncreaseVar;
                         }
 
                 //BLOCK MOVEMENT
                     //Left movement
-                        if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && LY >= 0)
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && left.Y >= 0)
                         {
-                            LY = LY - RS;
+                            left.Y = left.Y - left.S;
                         }
 
-                        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && LY <= (windowH-LH))
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && left.Y <= (Window.windowH-left.H))
                         {
-                            LY = LY + LS;
+                            left.Y = left.Y + left.S;
                         }
 
                     //Right movement
-                        if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && RY >= 0)
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && right.Y >= 0)
                         {
-                            RY = RY - RS;
+                            right.Y = right.Y - right.S;
                         }
 
-                        if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && RY <= (windowH-RH))
+                        if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && right.Y <= (Window.windowH-right.H))
                         {
-                            RY = RY + RS;
+                            right.Y = right.Y + right.S;
                         }
 
                 //Point system
                     //Left scores
-                        if (ballX > RX)
+                        if (ball.X > right.X)
                         {
                             //Score increase
-                                LSC++;
+                                left.SC++;
 
                             //Spawn new ball
-                                ballY = generator.Next(windowH/4,((windowH/4)*3));
-                                ballX = generator.Next(windowW/4, ((windowW/4)*3));
+                            
+                                ball = new Ball(generator.Next(Window.windowW/4, ((Window.windowW/4)*3)), generator.Next(Window.windowH/4,((Window.windowH/4)*3)));
+
 
                             //Reset speed
-                                xConstant = speedIncreaseConstant;
-                                yConstant = speedIncreaseConstant;
+                                ball.xConstant = ball.speedIncreaseConstant;
+                                ball.yConstant = ball.speedIncreaseConstant;
                         }
                     //Right scores
-                        else if (ballX < (LX+LW))
+                        else if (ball.X < (left.X+left.W))
                         {
                             //Score increase
-                                RSC++;
+                                right.SC++;
 
                             //Spawn new ball
-                                ballY = generator.Next(windowH/4,((windowH/4)*3));
-                                ballX = generator.Next(windowW/4, ((windowW/4)*3));
+                                ball = new Ball(generator.Next(Window.windowW/4, ((Window.windowW/4)*3)), generator.Next(Window.windowH/4,((Window.windowH/4)*3)));
+
 
                             //Reset speed
-                                xConstant = speedIncreaseConstant;
-                                yConstant = speedIncreaseConstant;
+                                ball.xConstant = ball.speedIncreaseConstant;
+                                ball.yConstant = ball.speedIncreaseConstant;
                         }
 
                 //DRAWING
                     Raylib.BeginDrawing();
 
-                    Raylib.ClearBackground(backgroundColor);
+                    Raylib.ClearBackground(Window.backgroundColor);
 
                     //Middle line
-                    Raylib.DrawRectangle((int)((windowW/2)-(midW/2)), 0, (int)midW, windowH, Color.GRAY);
+                    Raylib.DrawRectangle((int)((Window.windowW/2)-(midW/2)), 0, (int)midW, Window.windowH, Color.GRAY);
 
                     //Score
-                    Raylib.DrawText(LSC.ToString(), (windowW/2)-(windowW/4), 5, 250, Color.GRAY);
+                    Raylib.DrawText(left.SC.ToString(), (Window.windowW/2)-(Window.windowW/4), 5, 250, Color.GRAY);
 
-                    Raylib.DrawText(RSC.ToString(), (windowW/2)+(windowH/4), 5, 250, Color.GRAY);
+                    Raylib.DrawText(right.SC.ToString(), (Window.windowW/2)+(Window.windowH/4), 5, 250, Color.GRAY);
                     
                     //Ball
-                    if (ballX > 0 && ballX < windowW)
+                    if (ball.X > 0 && ball.X < Window.windowW)
                     {
-                        Raylib.DrawCircle((int)ballX, (int)ballY, ballR, Color.WHITE);
+                        Raylib.DrawCircle((int)ball.X, (int)ball.Y, ball.R, Color.WHITE);
                     }
                     
                     //Blocks
-                    Raylib.DrawRectangle((int)LX, (int)LY, LW, LH, Color.WHITE);
+                    Raylib.DrawRectangle((int)left.X, (int)left.Y, left.W, left.H, Color.WHITE);
 
-                    Raylib.DrawRectangle((int)RX, (int)RY, RW, RH, Color.WHITE);
+                    Raylib.DrawRectangle((int)right.X, (int)right.Y, right.W, right.H, Color.WHITE);
 
                     Raylib.EndDrawing();
             }
